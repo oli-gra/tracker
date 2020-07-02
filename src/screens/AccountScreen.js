@@ -1,16 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native';
 
 const AccountScreen = () => {
-  return (
-    <Text>
-      Account Screen
-    </Text>
-  );
-}
+  return <Text style={{ fontSize: 48 }}>AccountScreen</Text>;
+};
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({});
 
 export default AccountScreen;
