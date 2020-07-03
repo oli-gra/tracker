@@ -5,8 +5,10 @@ import { navigate } from '../navRef'
 
 const authReducer = (state, action) => {
   switch (action.type) {
+    case 'signout':
+      return { token: null, errorMessage: '' }
     case 'signin':
-      return { errorMessage: '', token: action.payloa }
+      return { errorMessage: '', token: action.payload }
     case 'add_error':
       return { ...state, errorMessage: action.payload };
     case 'clear_error_message':
@@ -18,6 +20,16 @@ const authReducer = (state, action) => {
 
 const clearErrMessage = dispatch => () => {
   dispatch({ type: 'clear_error_message' })
+}
+
+const tryLocalSignin = dispatch => async () => {
+  const token = AsyncStorage.getItem('token')
+  if (token) {
+    dispatch({ type: 'signin', payload: token })
+    navigate('TrackList')
+  } else {
+    navigate('Signup')
+  }
 }
 
 const signup = dispatch => async ({ email, password }) => {
@@ -48,14 +60,16 @@ const signin = dispatch => async ({ email, password }) => {
   }
 };
 
-const signout = dispatch => {
-  return () => {
-    // somehow sign out!!!
-  };
+const signout = dispatch => async () => {
+  await AsyncStorage.removeItem('token')
+  dispatch({
+    type: 'signout'
+  })
+  navigate('loginFlow')
 };
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup, clearErrMessage },
+  { signin, signout, signup, clearErrMessage, tryLocalSignin },
   { token: null, errorMessage: '' }
 );

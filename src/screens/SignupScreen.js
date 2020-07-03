@@ -7,6 +7,7 @@ import AuthForm from '../components/AuthForm'
 
 const SignupScreen = () => {
   const { state, signup, clearErrMessage } = useContext(AuthContext);
+
   return <View>
     <NavigationEvents onWillFocus={clearErrMessage} />
     <AuthForm
