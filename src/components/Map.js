@@ -5,7 +5,7 @@ import { Context as LocationContext } from '../context/LocationContext'
 import { ActivityIndicator } from 'react-native-paper';
 
 const Map = () => {
-  const { state: { currentLocation } } = useContext(LocationContext)
+  const { state: { currentLocation, locations } } = useContext(LocationContext)
   if (!currentLocation) {
     return <ActivityIndicator size="large" />
   }
@@ -24,7 +24,7 @@ const Map = () => {
       strokeColor="rgba(10, 10, 10, 1.0)"
       fillColor="rgba(10, 10, 10, 0.3)"
     />
-    <Polyline />
+    <Polyline coordinates={locations.map(loc => loc.coords)} />
   </MapView>
 }
 
